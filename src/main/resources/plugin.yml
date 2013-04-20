@@ -1,0 +1,14 @@
+name: LilyPad-PortalCommand
+version: ${build.number}
+description: LilyPad
+
+author: LilyPad
+website: http://lilypadmc.com/
+
+main: ${main.class}
+depend: [LilyPad-Connect, LilyPad-Portal]
+
+commands:
+  server:
+    description:
+    usage:
