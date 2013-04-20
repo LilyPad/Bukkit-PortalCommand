@@ -25,6 +25,7 @@ public class ServerQuickCommand implements Listener {
 			return;
 		}
 		this.redirector.requestRedirect(event.getPlayer(), command);
+		event.setCancelled(true);
 	}
 
 }
