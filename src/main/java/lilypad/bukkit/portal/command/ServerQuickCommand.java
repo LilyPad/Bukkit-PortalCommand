@@ -21,10 +21,17 @@ public class ServerQuickCommand implements Listener {
 		if((index = command.indexOf(' ')) != -1) {
 			command = command.substring(0, index);
 		}
-		if(!this.allowedServers.contains(command)) {
+		String server = null;
+		for(String allowedServer : this.allowedServers) {
+			if(!allowedServer.equalsIgnoreCase(command)) {
+				continue;
+			}
+			server = allowedServer;
+		}
+		if(server == null) {
 			return;
 		}
-		this.redirector.requestRedirect(event.getPlayer(), command);
+		this.redirector.requestRedirect(event.getPlayer(), server);
 		event.setCancelled(true);
 	}
 

@@ -21,13 +21,20 @@ public class ServerCommand implements CommandExecutor {
 		if(args.length != 1) {
 			return true;
 		}
-		if(!this.allowedServers.contains(args[0])) {
+		String server = null;
+		for(String allowedServer : this.allowedServers) {
+			if(!allowedServer.equalsIgnoreCase(args[0])) {
+				continue;
+			}
+			server = allowedServer;
+		}
+		if(server == null) {
 			return true;
 		}
 		if(!(sender instanceof Player)) {
 			return true;
 		}
-		this.redirector.requestRedirect((Player) sender, args[0]);
+		this.redirector.requestRedirect((Player) sender, server);
 		return true;
 	}
 
