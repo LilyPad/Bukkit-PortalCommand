@@ -46,6 +46,9 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 	}
 
 	public void requestRedirect(final Player player, final String server) {
+		if(server.equals(this.getConnect().getSettings().getUsername())) {
+			return;
+		}
 		try {
 			this.getConnect().request(new MessageRequest(server, "lpPortal", "REQUEST " + player.getName())).registerListener(new FutureResultListener<MessageResult>() {
 				public void onResult(MessageResult messageResult) {
