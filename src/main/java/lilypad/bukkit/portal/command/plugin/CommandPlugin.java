@@ -13,6 +13,7 @@ import lilypad.client.connect.api.result.FutureResultListener;
 import lilypad.client.connect.api.result.StatusCode;
 import lilypad.client.connect.api.result.impl.MessageResult;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +44,10 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 
 	public boolean isQuickCommands() {
 		return super.getConfig().getBoolean("quick-commands");
+	}
+	
+	public String getMessage(String id) {
+		return ChatColor.translateAlternateColorCodes('&', super.getConfig().getString("messages." + id));
 	}
 
 	public void requestRedirect(final Player player, final String server) {

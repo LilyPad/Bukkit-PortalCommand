@@ -8,4 +8,6 @@ public interface IConfig {
 	
 	public boolean isQuickCommands();
 	
+	public String getMessage(String id);
+	
 }

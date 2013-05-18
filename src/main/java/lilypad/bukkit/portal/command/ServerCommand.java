@@ -10,15 +10,28 @@ import org.bukkit.entity.Player;
 public class ServerCommand implements CommandExecutor {
 
 	private List<String> allowedServers;
+	private IConfig config;
 	private IRedirector redirector;
 	
 	public ServerCommand(IConfig config, IRedirector redirector) {
 		this.allowedServers = config.getAllowedServers();
+		this.config = config;
 		this.redirector = redirector;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(args.length != 1) {
+		if(args.length == 0) {
+			StringBuilder servers = new StringBuilder();
+			boolean first = true;
+			for(String server : this.allowedServers) {
+				if(first) {
+					first = false;
+				} else {
+					servers.append(", ");
+				}
+				servers.append(this.config.getMessage("server").replace("{name}", server));
+			}
+			sender.sendMessage(this.config.getMessage("allowed-servers").replace("{servers}", servers.toString()));
 			return true;
 		}
 		String server = null;

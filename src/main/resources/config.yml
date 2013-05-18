@@ -1,3 +1,6 @@
+quick-commands: true
 allowed-servers:
 - hub
-quick-commands: true
+messages: 
+    allowed-servers: '&fYou can connect to the following servers: {servers}'
+    server: '&6{name}&f'
