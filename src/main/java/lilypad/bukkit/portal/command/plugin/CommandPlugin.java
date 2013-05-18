@@ -9,9 +9,11 @@ import lilypad.bukkit.portal.command.ServerQuickCommand;
 import lilypad.bukkit.portal.command.util.MessageConstants;
 import lilypad.client.connect.api.Connect;
 import lilypad.client.connect.api.request.impl.MessageRequest;
+import lilypad.client.connect.api.request.impl.RedirectRequest;
 import lilypad.client.connect.api.result.FutureResultListener;
 import lilypad.client.connect.api.result.StatusCode;
 import lilypad.client.connect.api.result.impl.MessageResult;
+import lilypad.client.connect.api.result.impl.RedirectResult;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,7 +27,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 		super.saveConfig();
 		super.reloadConfig();
 	}
-	
+
 	@Override
 	public void onEnable() {
 		super.getCommand("server").setExecutor(new ServerCommand(this, this));
@@ -37,7 +39,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 	public Connect getConnect() {
 		return super.getServer().getServicesManager().getRegistration(Connect.class).getProvider();
 	}
-	
+
 	public List<String> getAllowedServers() {
 		return super.getConfig().getStringList("allowed-servers");
 	}
@@ -45,27 +47,36 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 	public boolean isQuickCommands() {
 		return super.getConfig().getBoolean("quick-commands");
 	}
-	
+
 	public String getMessage(String id) {
 		return ChatColor.translateAlternateColorCodes('&', super.getConfig().getString("messages." + id));
 	}
 
 	public void requestRedirect(final Player player, final String server) {
-		if(server.equals(this.getConnect().getSettings().getUsername())) {
-			return;
-		}
 		try {
-			this.getConnect().request(new MessageRequest(server, "lpPortal", "REQUEST " + player.getName())).registerListener(new FutureResultListener<MessageResult>() {
-				public void onResult(MessageResult messageResult) {
-					if(messageResult.getStatusCode() == StatusCode.SUCCESS) {
-						return;
+			Connect connect = this.getConnect();
+			if(super.getServer().getPluginManager().isPluginEnabled("LilyPad-Portal")) {
+				connect.request(new MessageRequest(server, "lpPortal", "REQUEST " + player.getName())).registerListener(new FutureResultListener<MessageResult>() {
+					public void onResult(MessageResult messageResult) {
+						if(messageResult.getStatusCode() == StatusCode.SUCCESS) {
+							return;
+						}
+						player.sendMessage(MessageConstants.format(MessageConstants.SERVER_OFFLINE));
 					}
-					player.sendMessage(MessageConstants.format(MessageConstants.SERVER_OFFLINE));
-				}
-			});
+				});
+			} else {
+				connect.request(new RedirectRequest(server, player.getName())).registerListener(new FutureResultListener<RedirectResult>() {
+					public void onResult(RedirectResult redirectResult) {
+						if(redirectResult.getStatusCode() == StatusCode.SUCCESS) {
+							return;
+						}
+						player.sendMessage(MessageConstants.format(MessageConstants.SERVER_OFFLINE));
+					}
+				});
+			}
 		} catch(Exception exception) {
 			// ignore
 		}
 	}
-	
+
 }
