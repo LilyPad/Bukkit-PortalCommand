@@ -59,7 +59,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 				}
 			});
 		} catch(Exception exception) {
-			exception.printStackTrace();
+			// ignore
 		}
 	}
 	
