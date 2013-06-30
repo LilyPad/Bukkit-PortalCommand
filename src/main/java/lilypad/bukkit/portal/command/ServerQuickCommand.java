@@ -17,10 +17,6 @@ public class ServerQuickCommand implements Listener {
 	
 	public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		String command = event.getMessage().substring(1);
-		int index;
-		if((index = command.indexOf(' ')) != -1) {
-			command = command.substring(0, index);
-		}
 		String server = null;
 		for(String allowedServer : this.allowedServers) {
 			if(!allowedServer.equalsIgnoreCase(command)) {
