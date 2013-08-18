@@ -3,7 +3,7 @@ version: ${build.number}
 description: LilyPad
 
 author: LilyPad
-website: http://lilypadmc.com/
+website: http://www.lilypadmc.org/
 
 main: ${main.class}
 depend: [LilyPad-Connect, LilyPad-Portal]
