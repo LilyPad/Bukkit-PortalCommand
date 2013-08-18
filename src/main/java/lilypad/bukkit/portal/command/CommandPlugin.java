@@ -1,11 +1,7 @@
-package lilypad.bukkit.portal.command.plugin;
+package lilypad.bukkit.portal.command;
 
 import java.util.List;
 
-import lilypad.bukkit.portal.command.IConfig;
-import lilypad.bukkit.portal.command.IRedirector;
-import lilypad.bukkit.portal.command.ServerCommand;
-import lilypad.bukkit.portal.command.ServerQuickCommand;
 import lilypad.bukkit.portal.command.util.MessageConstants;
 import lilypad.client.connect.api.Connect;
 import lilypad.client.connect.api.request.impl.MessageRequest;

@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <build.number>Unknown</build.number>
-    <main.class>lilypad.bukkit.portal.command.plugin.CommandPlugin</main.class>
+    <main.class>lilypad.bukkit.portal.command.CommandPlugin</main.class>
   </properties>
   
   <repositories>
