@@ -2,7 +2,6 @@ package lilypad.bukkit.portal.command;
 
 import java.util.List;
 
-import lilypad.bukkit.portal.command.util.MessageConstants;
 import lilypad.client.connect.api.Connect;
 import lilypad.client.connect.api.request.impl.MessageRequest;
 import lilypad.client.connect.api.request.impl.RedirectRequest;
@@ -57,7 +56,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 						if(messageResult.getStatusCode() == StatusCode.SUCCESS) {
 							return;
 						}
-						player.sendMessage(MessageConstants.format(MessageConstants.SERVER_OFFLINE));
+						player.sendMessage(CommandPlugin.this.getMessage("server-offline"));
 					}
 				});
 			} else {
@@ -66,7 +65,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 						if(redirectResult.getStatusCode() == StatusCode.SUCCESS) {
 							return;
 						}
-						player.sendMessage(MessageConstants.format(MessageConstants.SERVER_OFFLINE));
+						player.sendMessage(CommandPlugin.this.getMessage("server-offline"));
 					}
 				});
 			}

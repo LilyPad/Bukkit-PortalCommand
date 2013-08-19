@@ -1,6 +1,7 @@
 quick-commands: true
 allowed-servers:
 - hub
-messages: 
+messages:
+  server-offline: '&f[&7Server&f] This server is currently &4offline&f. Try again later!'
   allowed-servers: '&fYou can connect to the following servers: {servers}'
   server: '&6{name}&f'
