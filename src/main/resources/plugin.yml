@@ -6,7 +6,7 @@ author: LilyPad
 website: http://www.lilypadmc.org/
 
 main: ${main.class}
-depend: [LilyPad-Connect, LilyPad-Portal]
+depend: [LilyPad-Connect]
 
 commands:
   server:
