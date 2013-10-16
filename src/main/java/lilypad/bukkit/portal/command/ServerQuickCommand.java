@@ -2,6 +2,7 @@ package lilypad.bukkit.portal.command;
 
 import java.util.List;
 
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
@@ -15,6 +16,7 @@ public class ServerQuickCommand implements Listener {
 		this.redirector = redirector;
 	}
 	
+	@EventHandler
 	public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		String command = event.getMessage().substring(1);
 		String server = null;
