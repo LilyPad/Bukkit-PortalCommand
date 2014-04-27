@@ -3,11 +3,10 @@ package lilypad.bukkit.portal.command;
 import java.util.List;
 
 import lilypad.client.connect.api.Connect;
-import lilypad.client.connect.api.request.impl.MessageRequest;
+import lilypad.client.connect.api.request.RequestException;
 import lilypad.client.connect.api.request.impl.RedirectRequest;
 import lilypad.client.connect.api.result.FutureResultListener;
 import lilypad.client.connect.api.result.StatusCode;
-import lilypad.client.connect.api.result.impl.MessageResult;
 import lilypad.client.connect.api.result.impl.RedirectResult;
 
 import org.bukkit.ChatColor;
@@ -49,27 +48,15 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 
 	public void requestRedirect(final Player player, final String server) {
 		try {
-			Connect connect = this.getConnect();
-			if(super.getServer().getPluginManager().isPluginEnabled("LilyPad-Portal")) {
-				connect.request(new MessageRequest(server, "lpPortal", "REQUEST " + player.getName())).registerListener(new FutureResultListener<MessageResult>() {
-					public void onResult(MessageResult messageResult) {
-						if(messageResult.getStatusCode() == StatusCode.SUCCESS) {
-							return;
-						}
-						player.sendMessage(CommandPlugin.this.getMessage("server-offline"));
+			this.getConnect().request(new RedirectRequest(server, player.getName())).registerListener(new FutureResultListener<RedirectResult>() {
+				public void onResult(RedirectResult redirectResult) {
+					if(redirectResult.getStatusCode() == StatusCode.SUCCESS) {
+						return;
 					}
-				});
-			} else {
-				connect.request(new RedirectRequest(server, player.getName())).registerListener(new FutureResultListener<RedirectResult>() {
-					public void onResult(RedirectResult redirectResult) {
-						if(redirectResult.getStatusCode() == StatusCode.SUCCESS) {
-							return;
-						}
-						player.sendMessage(CommandPlugin.this.getMessage("server-offline"));
-					}
-				});
-			}
-		} catch(Exception exception) {
+					player.sendMessage(CommandPlugin.this.getMessage("server-offline"));
+				}
+			});
+		} catch(RequestException exception) {
 			// ignore
 		}
 	}
