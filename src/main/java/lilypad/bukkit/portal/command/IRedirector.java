@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface IRedirector {
 
-	public void requestRedirect(Player player, String server);
+	public void redirect(Player player, String server);
 	
 }

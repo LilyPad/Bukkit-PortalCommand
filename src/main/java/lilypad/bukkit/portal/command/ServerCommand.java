@@ -47,7 +47,7 @@ public class ServerCommand implements CommandExecutor {
 		if(!(sender instanceof Player)) {
 			return true;
 		}
-		this.redirector.requestRedirect((Player) sender, server);
+		this.redirector.redirect((Player) sender, server);
 		return true;
 	}
 

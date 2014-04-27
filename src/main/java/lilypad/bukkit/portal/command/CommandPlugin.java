@@ -46,9 +46,13 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 		return ChatColor.translateAlternateColorCodes('&', super.getConfig().getString("messages." + id));
 	}
 
-	public void requestRedirect(final Player player, final String server) {
+	public void redirect(final Player player, final String server) {
+		Connect connect = this.getConnect();
+		if(connect.getSettings().getUsername().equals(server)) {
+			return; // probably a bad idea to redirect when you're already on this server
+		}
 		try {
-			this.getConnect().request(new RedirectRequest(server, player.getName())).registerListener(new FutureResultListener<RedirectResult>() {
+			connect.request(new RedirectRequest(server, player.getName())).registerListener(new FutureResultListener<RedirectResult>() {
 				public void onResult(RedirectResult redirectResult) {
 					if(redirectResult.getStatusCode() == StatusCode.SUCCESS) {
 						return;
