@@ -49,6 +49,7 @@ public class CommandPlugin extends JavaPlugin implements IConfig, IRedirector {
 	public void redirect(final Player player, String server) {
 		Connect connect = this.getConnect();
 		if(connect.getSettings().getUsername().equals(server)) {
+                        player.sendMessage("You are already connected to this server.");
 			return; // probably a bad idea to redirect when you're already on this server
 		}
 		try {
